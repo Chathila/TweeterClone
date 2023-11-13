@@ -6,18 +6,7 @@ To run the program:
 ```shell
 $ python3 main.py (optional) database_filename
 ```
-where database_filename is the filename of the database in the current working directory the program will use. If none specified, the test1.db database will be used.
-
-To update the test1 database:
-- Make necessary SQL changes in sqlData.sql
-- From the command line, open sqlite3, then open the test1.db, then run sqlData.sql file on database:
-```
-$ sqlite3
-sqlite3> .open test1.db
-sqlite3> .read sqlData.sql
-sqlite3> .exit
-```
-- The test1 database will now be updated.
+where database_filename is the filename of the database in the current working directory the program will use. If none is specified, the test1.db database will be used. The file test1.db is the database I used to test to ensure proper functionality of the functions I implemented
 
 ### Dependencies:
 The following libraries are required to run the program:
@@ -27,8 +16,8 @@ The following libraries are required to run the program:
 - re
 - math
 
-<!-- If not installed on your system, run:
+If not installed on your system, run:
 ```shell
 $ pip install (dependency_name)
-``` -->
+``` 
 
