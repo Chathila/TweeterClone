@@ -14,7 +14,7 @@ class TestLogin(unittest.TestCase):
         self.connection = MagicMock()
         self.cursor = MagicMock()
         self.connection.cursor.return_value = self.cursor
-        self.user = (1, "TestUser")
+        self.user = (1, "test_user", "Test User")  # Mock logged-in user
 
     @patch('builtins.input', side_effect=['Test User', 'test@example.com', 'Test City', 'UTC'])
     @patch('getpass.getpass', side_effect=['password123', 'password123'])
@@ -249,19 +249,17 @@ class TestLogin(unittest.TestCase):
         mock_print.assert_any_call("------------------------------------")
 
     @patch('builtins.print')
-    @patch('builtins.input', side_effect=['r', '1', 'hello', 'c'])
+    @patch('builtins.input', side_effect=['r', '1', 'Reply message', 'c'])
     def test_reply_to_tweet(self, mock_input, mock_print):
         # Arrange
         self.cursor.fetchall.side_effect = [[
             ("User1", "Tweet", "2024-12-01", "Tweet text", 101, 2)
         ], []]
-        
-        with patch('login.build_tweet') as mock_build_tweet:
-
-            post_login(self.connection, self.cursor, self.user)
-            mock_build_tweet.assert_called_once_with(self.cursor, self.connection, self.user, 101)
-            mock_print.assert_any_call("CHATHILAAAAAA")
-            mock_print.assert_any_call(f"    {1}. User1 @ 2024-12-01 : Tweet text\n")
+        post_login(self.connection, self.cursor, self.user)
+        mock_print.assert_any_call("Your reply...")
+        mock_print.assert_any_call("    Test User : Reply message")
+        mock_print.assert_any_call("...has been made!")
+        mock_print.assert_any_call(f"    {1}. User1 @ 2024-12-01 : Tweet text\n")
 
     @patch('builtins.print')
     @patch('builtins.input', side_effect=['t','1', 'c'])
